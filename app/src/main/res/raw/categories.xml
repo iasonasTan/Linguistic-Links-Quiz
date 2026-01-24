@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <category id="ll.category.time"        name="Χρόνος">           Ύστερα/Αργότερα/Έπειτα/Στη συνέχεια/Τροηγουμένως/Ταυτόχρονα/συγχρόνως/Στο μεταξύ</category>
+    <category id="ll.category.count"       name="Αρίθμιση">         Πρώτο/Δεύτερο/Τέλος/Στην Πρώτη περίπτωση/Στη Δεύτερη Περίπτωση/Αφενός</category>
+    <category id="ll.category.cause"       name="Αιτία">            Γιατί/Διότι/Αφού/Επειδή/Καθώς/Καθόσον</category>
+    <category id="ll.category.conclusion"  name="Συμπέρασμα">       Επομένως/Άρα/Λοιπόν/Συμπερασματικά/Τελικά/Συνοψίζοντας/Κοντολογίς/Εν Κατακλείδι/Συνεπώς/Για να συνοψίσουμε</category>
+    <category id="ll.category.result"      name="Αίτιο/Αποτέλεσμα"> Λόγο/Εξαιτίας/Γι'αυτό το λόγο/Χάρη σε αυτό/Ώστε/Με αποτέλεσμα/Ώς απόρροια</category>
+    <category id="ll.category.explanation" name="Επεξήγηση">        Δηλαδή/Με άλλα λόγια/Πιο συγκεκριμένα/Για να γίνει πιο σαφές/Με όσα είπα προηγουμένως εννοούσα</category>
+    <category id="ll.category.exclamation" name="Βεβαιώτητα/Έμφαση">Βέβαια/Φυσικά/Αναμφισβήτητα/Αναμφίβολα/Πράγματι/Οπωσδήποτε/Ιδιαίτερα/Κυρίως/Προπάντων/θα ήθελα να τονίσω</category>
+    <category id="ll.category.contrast"    name="Αντίθεση">         Αλλά/όμως/ωστόσω/εντούτοις/εντίθετα/Μονολότι/Απο τη μία.... Απο την άλλη.../Στον Αντίποδα</category>
+    <category id="ll.category.addition"    name="Προσθίκη">         Επιπλέον/Ακόμη/Επίσης/Εκτός απ'αυτό/Επιπρόσθετα/Συμπληροματικά</category>
+    <category id="ll.category.requirement" name="Προυπόθεση">       Εάν/Αν/Εφόσον/Με την προυπόθεση/Όταν/Στην περίπτωση που</category>
+    <category id="ll.category.bind"        name="Διάζευξη">         Εάν/Είτε... είτε/ή</category>
+    <category id="ll.category.analogy"     name="Αναλογία">         Σαν/Όπως ακριβώς... έτσι και/Με τον ίδιο τρόπο/Κατα τον ίδιο τρόπο/Παρόμοια</category>
+    <category id="ll.category.example"     name="Παράδειγμα">       Λόγου χάρη/π.χ./Για παράδειγμα/Ενδεικτικά/κ.ά.</category>
+</resources>
