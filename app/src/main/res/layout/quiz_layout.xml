@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingTop="25dp"
+    android:padding="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_height="100dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/question_view"
             android:textAlignment="center"
             android:text="@string/unknown"
-            android:textSize="25sp"
+            android:fontFamily="@font/droidsans_bold"
+            android:textSize="30sp"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            tools:ignore="NestedWeights" />
-        <!-- TODO FIND A BETTER WAY, WITHOUT NESTED WEIGHTS -->
+            android:layout_weight="5"
+            android:layout_height="match_parent"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/score_view"
             android:textAlignment="center"
             android:text="@string/score_0"
-            android:textSize="25sp"
+            android:fontFamily="@font/droidsans_bold"
+            android:textSize="30sp"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="5"
             android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/show_table"
+            android:contentDescription="@string/show_all"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_gravity="top"
+            android:src="@drawable/list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
 

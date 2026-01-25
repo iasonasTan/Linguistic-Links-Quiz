@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.app.ll.util.IterableNodeList;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,9 +37,8 @@ public final class ChoiceManager implements Iterable<ChoiceManager.Choice>, Rand
         try (InputStream inputStream = context.getResources().openRawResource(resID)) {
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
-            NodeList elements = document.getElementsByTagName("category");
-            for (int i = 0; i < elements.getLength(); i++) {
-                Node node = elements.item(i);
+            NodeList nodes = document.getElementsByTagName("category");
+            for (Node node: new IterableNodeList(nodes)) {
                 if(node instanceof Element) {
                     Element element = (Element)node;
                     mChoices.add(Choice.fromElement(element));

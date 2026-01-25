@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.app.ll.page.AbstractPage;
 import com.app.ll.page.QuizFragment;
+import com.app.ll.page.TableFragment;
 import com.google.android.material.color.DynamicColors;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public final class MainActivity extends AppCompatActivity {
         private void setPage(String pageName) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.anim.to_left, R.anim.to_right) // TODO testing
                     .replace(R.id.frag_container, getFragmentByName(pageName))
                     .commit();
         }
@@ -68,6 +70,7 @@ public final class MainActivity extends AppCompatActivity {
 
         // initialize fragment
         mPages.add(new QuizFragment());
+        mPages.add(new TableFragment());
 
         // init layout
         if(savedInstanceState==null)

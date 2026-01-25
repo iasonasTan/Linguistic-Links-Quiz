@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">Linguistic Links</string>
+    <string translatable="false" name="app_name">Linguistic Links</string>
+    <string translatable="false" name="ok">OK</string>
+
     <string name="skip">Skip</string>
     <string name="score">"Score: "</string>
     <string name="wrong_answer">Wrong Answer!</string>
     <string name="score_0">Score: 0</string>
     <string name="unknown">UNKNOWN</string>
     <string name="answer">"Answer: "</string>
-    <string name="ok">OK</string>
+    <string name="show_all">Show all answers</string>
+    <string name="skipped">Skipped</string>
+    <string name="show_quiz">Show Quiz</string>
+    <string name="all_links">All Links</string>
 </resources>
