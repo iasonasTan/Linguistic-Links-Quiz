@@ -1,7 +1,9 @@
 package com.app.ll.page;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +55,9 @@ public class TableFragment extends AbstractPage {
     }
 
     private ViewGroup.LayoutParams getParams() {
-        return new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        var out = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        out.setMargins(5, 10, 5, 10);
+        return out;
     }
 
     private void loadLinkViews(ViewGroup root) {
@@ -79,24 +83,26 @@ public class TableFragment extends AbstractPage {
         }
 
         public void appendViews(ViewGroup root, ViewGroup.LayoutParams params) {
-            NodeList nodes = mDocument.getChildNodes();
+            NodeList nodes = mDocument.getElementsByTagName("category");
             for(Node node: new IterableNodeList(nodes)) {
                 if(node instanceof Element) {
                     Element element = (Element)node;
-                    appendView(element, root);
+                    appendView(element, root, params);
                 }
             }
         }
 
-        private void appendView(Element element, ViewGroup root) {
+        private void appendView(Element element, ViewGroup root, ViewGroup.LayoutParams params) {
             TextView textView = new TextView(requireContext());
-            String text = String.format(
-                    "%s: %s",
-                    element.getAttribute("name"),
-                    element.getTextContent().replace("/", ", ")
-            );
-            textView.setText(text);
+            String name = element.getAttribute("name");
+            String words = element.getTextContent().replace("/", ", ");
+            // noinspection all
+            textView.setText(name+": "+words);
+            textView.setLayoutParams(params);
             textView.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.droidsans_bold));
+            textView.setTextSize(25);
+            textView.setPadding(5, 5, 5, 5);
+            textView.setBackgroundResource(R.drawable.text_background);
             root.addView(textView);
         }
     }

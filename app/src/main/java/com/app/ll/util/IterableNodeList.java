@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -18,16 +19,10 @@ public class IterableNodeList implements Iterable<Node> {
         this.mNodeList = mNodeList;
     }
 
-    // TODO make own iterator
     @NonNull
     @Override
     public Iterator<Node> iterator() {
-        List<Node> nodeList = new ArrayList<>();
-        for (int i = 0; i < mNodeList.getLength(); i++) {
-            Node node = mNodeList.item(i);
-            nodeList.add(node);
-        }
-        return nodeList.iterator();
+        return new Iter(mNodeList);
     }
 
     @Override
@@ -38,15 +33,49 @@ public class IterableNodeList implements Iterable<Node> {
         }
     }
 
-    // TODO make own spliterator
     @NonNull
     @Override
     public Spliterator<Node> spliterator() {
-        List<Node> nodeList = new ArrayList<>();
-        for (int i = 0; i < mNodeList.getLength(); i++) {
-            Node node = mNodeList.item(i);
-            nodeList.add(node);
+        throw new UnsupportedOperationException();
+    }
+
+    private static final class Iter implements Iterator<Node> {
+        private Node[] mNodes;
+        private int mIndex = -1;
+        private boolean mNextCalled = false;
+
+        public Iter(NodeList nodes) {
+            mNodes = new Node[nodes.getLength()];
+            for (int i = 0; i < nodes.getLength(); i++) {
+                mNodes[i] = nodes.item(i);
+            }
         }
-        return nodeList.spliterator();
+
+        @Override
+        public boolean hasNext() {
+            return mIndex+1 < mNodes.length;
+        }
+
+        @Override
+        public Node next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            mNextCalled = true;
+            return mNodes[++mIndex];
+        }
+
+        @Override
+        public void remove() {
+            if (!mNextCalled)
+                throw new IllegalStateException();
+            mNextCalled = false;
+
+            Node[] newNodes = new Node[mNodes.length - 1];
+            System.arraycopy(mNodes, 0, newNodes, 0, mIndex);
+            System.arraycopy(mNodes, mIndex+1, newNodes, mIndex, mNodes.length-mIndex-1);
+
+            mNodes = newNodes;
+            mIndex--;
+        }
     }
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,39 +15,47 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.app.ll.page.AbstractPage;
 import com.app.ll.page.QuizFragment;
 import com.app.ll.page.TableFragment;
 import com.google.android.material.color.DynamicColors;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public final class MainActivity extends AppCompatActivity {
     public static final String ACTION_CHANGE_PAGE = "ll.action.changePage";
     public static final String PAGE_NAME_EXTRA    = "ll.extra.pageName";
+    public static final String USE_ANIMATION_EXTRA= "ll.extra.useAnimation";
 
-    private final List<AbstractPage> mPages = new ArrayList<>();
+    private Vibrator mVibrator;
+    private VibrationEffect mSwitchPageEffect;
+    private List<AbstractPage> mPages;
 
     private final BroadcastReceiver mRequestReceiver = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
             String action = Objects.requireNonNull(intent.getAction());
-            // noinspection all
+            // noinspection all : one-case switch statement
             switch(action) {
                 case ACTION_CHANGE_PAGE:
+                    mVibrator.vibrate(mSwitchPageEffect);
                     String pageName = Objects.requireNonNull(intent.getStringExtra(PAGE_NAME_EXTRA));
-                    setPage(pageName);
+                    boolean animation = intent.getBooleanExtra(USE_ANIMATION_EXTRA, true);
+                    setPage(pageName, animation);
                     break;
             }
         }
 
-        private void setPage(String pageName) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.to_left, R.anim.to_right) // TODO testing
-                    .replace(R.id.frag_container, getFragmentByName(pageName))
+        private void setPage(String pageName, boolean animation) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if(animation)
+                transaction.setCustomAnimations(R.anim.to_left, R.anim.to_right);
+            for (AbstractPage page : mPages)
+                transaction.hide(page);
+            transaction
+                    .show(getFragmentByName(pageName))
                     .commit();
         }
     };
@@ -68,16 +78,28 @@ public final class MainActivity extends AppCompatActivity {
         // register receivers
         ContextCompat.registerReceiver(this, mRequestReceiver, createIntentFilter(), ContextCompat.RECEIVER_NOT_EXPORTED);
 
-        // initialize fragment
-        mPages.add(new QuizFragment());
-        mPages.add(new TableFragment());
+        // initialize utils
+        mVibrator = getSystemService(Vibrator.class);
+        mSwitchPageEffect = VibrationEffect.createOneShot(135, VibrationEffect.DEFAULT_AMPLITUDE);
 
-        // init layout
-        if(savedInstanceState==null)
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.frag_container, getFragmentByName(QuizFragment.NAME))
-                    .commit();
+        // initialize layout
+        mPages = List.of(
+                new QuizFragment(),
+                new TableFragment()
+        );
+        if(savedInstanceState==null) {
+            for(AbstractPage page: mPages) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.frag_container, page)
+                        .commit();
+            }
+        }
+
+        sendBroadcast(new Intent(ACTION_CHANGE_PAGE)
+                .setPackage(getPackageName())
+                .putExtra(USE_ANIMATION_EXTRA, false)
+                .putExtra(PAGE_NAME_EXTRA, QuizFragment.NAME));
     }
 
     @Override

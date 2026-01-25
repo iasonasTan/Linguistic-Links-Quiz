@@ -6,52 +6,75 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
+        android:id="@+id/top_panel"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <ImageButton
+                android:id="@+id/show_table"
+                android:contentDescription="@string/show_all"
+                android:src="@drawable/list"
+                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/quiz"
+                android:textSize="40sp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/droidsans_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/question_view"
+            android:layout_margin="5dp"
             android:textAlignment="center"
+            android:padding="5dp"
+            android:background="@drawable/text_background"
             android:text="@string/unknown"
             android:fontFamily="@font/droidsans_bold"
-            android:textSize="30sp"
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:layout_height="match_parent"/>
+            android:textSize="23sp"
+            android:layout_width="match_parent"
+            android:layout_weight="4"
+            android:layout_height="0dp"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/score_view"
-            android:textAlignment="center"
             android:text="@string/score_0"
+            android:layout_margin="5dp"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:background="@drawable/text_background"
             android:fontFamily="@font/droidsans_bold"
-            android:textSize="30sp"
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:layout_height="match_parent"/>
-
-        <ImageButton
-            android:id="@+id/show_table"
-            android:contentDescription="@string/show_all"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:layout_gravity="top"
-            android:src="@drawable/list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="0dp"/>
 
     </LinearLayout>
 
-    <GridLayout
-        android:id="@+id/key_labels"
-        android:columnCount="2"
-        android:rowCount="7"
+    <ScrollView
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_weight="10"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
 
-        <!-- SUB-VIEWS ADDED WITH JAVA -->
-    </GridLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/key_labels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- SUB-VIEWS ADDED WITH JAVA -->
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
