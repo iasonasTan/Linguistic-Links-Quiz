@@ -1,13 +1,10 @@
 package com.app.ll.page;
 
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.app.ll.MainActivity;
 import com.app.ll.R;
 import com.app.ll.util.IterableNodeList;
 
@@ -44,34 +40,29 @@ public class TableFragment extends AbstractPage {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadLinkViews(view.findViewById(R.id.container));
-        ImageButton tableButton = view.findViewById(R.id.home_button);
-        tableButton.setOnClickListener(v -> {
-            Intent showTalbeIntent = new Intent(MainActivity.ACTION_CHANGE_PAGE);
-            showTalbeIntent.putExtra(MainActivity.PAGE_NAME_EXTRA, QuizFragment.NAME);
-            showTalbeIntent.setPackage(requireContext().getPackageName());
-            requireContext().sendBroadcast(showTalbeIntent);
-        });
-    }
-
-    private ViewGroup.LayoutParams getParams() {
-        var out = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        out.setMargins(5, 10, 5, 10);
-        return out;
-    }
-
-    private void loadLinkViews(ViewGroup root) {
-        try (InputStream inputStream = requireContext().getResources().openRawResource(R.raw.categories)) {
-            ViewBuilder viewBuilder = new ViewBuilder(inputStream);
-            viewBuilder.appendViews(root, getParams());
-        } catch (IOException | ParserConfigurationException | SAXException e) {
-            throw new RuntimeException(e);
-        }
+        new ViewLoader().loadLinkViews(view.findViewById(R.id.container));
     }
 
     @Override
     protected String name() {
         return NAME;
+    }
+
+    private final class ViewLoader {
+        private ViewGroup.LayoutParams getParams() {
+            var out = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            out.setMargins(5, 30, 5, 30);
+            return out;
+        }
+
+        private void loadLinkViews(ViewGroup root) {
+            try (InputStream inputStream = requireContext().getResources().openRawResource(R.raw.categories)) {
+                ViewBuilder viewBuilder = new ViewBuilder(inputStream);
+                viewBuilder.appendViews(root, getParams());
+            } catch (IOException | ParserConfigurationException | SAXException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private final class ViewBuilder {
@@ -88,8 +79,18 @@ public class TableFragment extends AbstractPage {
                 if(node instanceof Element) {
                     Element element = (Element)node;
                     appendView(element, root, params);
+                    appendSeperatorView(root);
                 }
             }
+        }
+
+        private void appendSeperatorView(ViewGroup root) {
+            View view = new View(requireContext());
+            view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
+            TypedValue typedValue = new TypedValue();
+            requireActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.colorOutline, typedValue, true);
+            view.setBackgroundColor(typedValue.data);
+            root.addView(view);
         }
 
         private void appendView(Element element, ViewGroup root, ViewGroup.LayoutParams params) {
@@ -102,7 +103,6 @@ public class TableFragment extends AbstractPage {
             textView.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.droidsans_bold));
             textView.setTextSize(25);
             textView.setPadding(5, 5, 5, 5);
-            textView.setBackgroundResource(R.drawable.text_background);
             root.addView(textView);
         }
     }

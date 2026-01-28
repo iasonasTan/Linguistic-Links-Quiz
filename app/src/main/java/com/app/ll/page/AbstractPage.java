@@ -14,4 +14,7 @@ public abstract class AbstractPage extends Fragment {
     public final String getName() {
         return mName;
     }
+
+    public void unregisterReceivers() {
+    }
 }

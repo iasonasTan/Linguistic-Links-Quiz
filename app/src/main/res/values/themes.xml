@@ -1,8 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.LinguisticLinks" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/droidsans_bold</item>
+        <item name="fontFamily">@font/droidsans_bold</item>
     </style>
 
     <style name="Theme.LinguisticLinks" parent="Base.Theme.LinguisticLinks" />

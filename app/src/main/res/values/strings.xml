@@ -1,10 +1,10 @@
 <resources>
-    <string translatable="false" name="app_name">Linguistic Links</string>
+    <string translatable="false" name="app_name">Linguistic Links Quiz</string>
     <string translatable="false" name="ok">OK</string>
 
     <string name="skip">Skip</string>
     <string name="score">"Score: "</string>
-    <string name="wrong_answer">Wrong Answer!</string>
+    <string name="remaining_tries">Remaining tries: </string>
     <string name="score_0">Score: 0</string>
     <string name="unknown">UNKNOWN</string>
     <string name="answer">Answer</string>
@@ -15,4 +15,6 @@
     <string name="quiz">Quiz</string>
     <string name="no_more_tries">No more tries!</string>
     <string name="question">Question</string>
+    <string name="settings">Settings</string>
+    <string name="enable_vibrations">Enable Vibrations</string>
 </resources>

@@ -1,42 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/home_button"
-            android:contentDescription="@string/show_quiz"
-            android:src="@drawable/home"
-            android:background="@android:color/transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="@string/all_links"
-            android:textSize="40sp"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/droidsans_bold"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:padding="15dp"
                 android:id="@+id/container"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -45,9 +18,5 @@
                 <!-- SUB-VIEWS ADDED WITH JAVA -->
 
             </LinearLayout>
-
         </HorizontalScrollView>
-
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>
