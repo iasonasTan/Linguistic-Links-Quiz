@@ -91,12 +91,6 @@ public final class QuizFragment extends AbstractPage {
     }
 
     @Override
-    public void unregisterReceivers() {
-        super.unregisterReceivers();
-
-    }
-
-    @Override
     protected String name() {
         return NAME;
     }
