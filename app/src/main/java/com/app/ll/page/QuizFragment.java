@@ -4,9 +4,15 @@ import static android.widget.LinearLayout.LayoutParams;
 import static com.app.ll.ChoiceManager.Choice;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.VibrationEffect;
+import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +23,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.app.ll.ChoiceManager;
 import com.app.ll.MainActivity;
 import com.app.ll.R;
+import com.app.ll.SettingsManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
@@ -37,10 +45,24 @@ public final class QuizFragment extends AbstractPage {
     private ChoiceManager mChoiceManager;
     private MaterialTextView mQuestionTextView, mScoreView;
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            loadSettings(context);
+        }
+    };
+
+    @Override
+    public void unregisterReceivers() {
+        super.unregisterReceivers();
+        requireContext().unregisterReceiver(mReceiver);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mChoiceManager = new ChoiceManager(requireContext(), R.raw.categories);
+        ContextCompat.registerReceiver(requireContext(), mReceiver, new IntentFilter(SettingsManager.ACTION_LOAD_SETTINGS), ContextCompat.RECEIVER_NOT_EXPORTED);
     }
 
     @Nullable
@@ -57,6 +79,15 @@ public final class QuizFragment extends AbstractPage {
 
         new ViewLoader().initAnswerButtons(view);
         nextQuestion();
+        loadSettings(requireContext());
+    }
+
+    private void loadSettings(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(SettingsManager.SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        if(mScoreView!=null) {
+            boolean enabled = preferences.getBoolean(SettingsManager.ENABLE_SCORE_NAME, true);
+            mScoreView.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void nextQuestion() {

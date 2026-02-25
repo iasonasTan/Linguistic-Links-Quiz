@@ -10,6 +10,7 @@ public final class SettingsManager {
     public static final String SETTINGS_PREFERENCES_NAME = "ll.settings.main";
     public static final String ACTION_LOAD_SETTINGS      = "ll.settings.update";
     public static final String ENABLE_VIBRATIONS_NAME    = "ll.settings.vibrations";
+    public static final String ENABLE_SCORE_NAME         = "ll.settings.score";
 
     private final Context context;
     private final View mRoot;
@@ -22,9 +23,11 @@ public final class SettingsManager {
     public void store() {
         SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
+        CheckBox enableScoreCheckBox = mRoot.findViewById(R.id.enable_score_checkbox);
         CheckBox enableVibrationsCheckBox = mRoot.findViewById(R.id.enable_vibrations_checkbox);
         preferences.edit()
                 .putBoolean(ENABLE_VIBRATIONS_NAME, enableVibrationsCheckBox.isChecked())
+                .putBoolean(ENABLE_SCORE_NAME, enableScoreCheckBox.isChecked())
                 .apply();
 
         Intent reloadSettingsIntent = new Intent(ACTION_LOAD_SETTINGS).setPackage(context.getPackageName());
@@ -36,5 +39,8 @@ public final class SettingsManager {
 
         CheckBox enableVibrationsCheckBox = mRoot.findViewById(R.id.enable_vibrations_checkbox);
         enableVibrationsCheckBox.setChecked(preferences.getBoolean(ENABLE_VIBRATIONS_NAME, true));
+
+        CheckBox enableScoreCheckBox = mRoot.findViewById(R.id.enable_score_checkbox);
+        enableScoreCheckBox.setChecked(preferences.getBoolean(ENABLE_SCORE_NAME, true));
     }
 }

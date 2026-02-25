@@ -40,7 +40,9 @@ public final class MainActivity extends AppCompatActivity {
     private List<AbstractPage> mPages;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override public void onReceive(Context context, Intent intent) {
+        @Override
+        @SuppressWarnings("all") // Switch has too fiew case labels
+        public void onReceive(Context context, Intent intent) {
             String action = Objects.requireNonNull(intent.getAction());
             switch(action) {
                 case SettingsManager.ACTION_LOAD_SETTINGS:
@@ -65,8 +67,10 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
-        mPages.forEach(AbstractPage::unregisterReceivers);
+        // Unusable code
+        // TODO Remove unregister receiver logic
+        //unregisterReceiver(mReceiver);
+        //mPages.forEach(AbstractPage::unregisterReceivers);
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,8 +35,13 @@ public class SettingsFragment extends AbstractPage {
     }
 
     private void addStoreListeners(View view) {
-        CheckBox checkBox = view.findViewById(R.id.enable_vibrations_checkbox);
-        checkBox.setOnCheckedChangeListener((b, checked) -> mSettingsManager.store());
+        final OnCheckedChangeListener listener = (b, checked) -> mSettingsManager.store();
+
+        CheckBox vibrationsCheckbox = view.findViewById(R.id.enable_vibrations_checkbox);
+        vibrationsCheckbox.setOnCheckedChangeListener(listener);
+
+        CheckBox scoreCheckbox = view.findViewById(R.id.enable_score_checkbox);
+        scoreCheckbox.setOnCheckedChangeListener(listener);
     }
 
     @Override

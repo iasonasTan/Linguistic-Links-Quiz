@@ -6,12 +6,19 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <CheckBox
             android:id="@+id/enable_vibrations_checkbox"
             android:text="@string/enable_vibrations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/enable_score_checkbox"
+            android:text="@string/enable_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
