@@ -76,10 +76,26 @@ public final class QuizFragment extends AbstractPage {
         super.onViewCreated(view, savedInstanceState);
         mQuestionTextView = view.findViewById(R.id.question_view);
         mScoreView = view.findViewById(R.id.score_view);
-
         new ViewLoader().initAnswerButtons(view);
-        nextQuestion();
-        loadSettings(requireContext());
+
+        if(savedInstanceState==null){
+            nextQuestion();
+            loadSettings(requireContext());
+        } else {
+            mQuestionTextView.setText(savedInstanceState.getCharSequence("question_text", "Error"));
+            mScoreView.setText(savedInstanceState.getCharSequence("score_text", "Error"));
+            mScore = savedInstanceState.getInt("score", 0);
+            mTriesLeft = savedInstanceState.getInt("tries_left", 3);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("question_text", mQuestionTextView.getText());
+        outState.putCharSequence("score_text", mScoreView.getText());
+        outState.putInt("score", mScore);
+        outState.putInt("tries_left", mTriesLeft);
     }
 
     private void loadSettings(Context context) {

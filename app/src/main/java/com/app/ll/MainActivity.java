@@ -113,7 +113,7 @@ public final class MainActivity extends AppCompatActivity {
         view.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             String name = null;
-            boolean animation = true;
+            boolean effects = true;
             if(id==R.id.nav_home) {
                 name = QuizFragment.NAME;
             } else if (id==R.id.nav_list) {
@@ -122,7 +122,7 @@ public final class MainActivity extends AppCompatActivity {
                 name = SettingsFragment.NAME;
             }
             if(name != null) {
-                setPage(name, animation);
+                setPage(name, effects);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
@@ -145,16 +145,17 @@ public final class MainActivity extends AppCompatActivity {
         setPage(QuizFragment.NAME, false);
     }
 
-    private void setPage(String pageName, boolean animation) {
+    private void setPage(String pageName, boolean effects) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragmentToShow = getFragmentByName(pageName);
         if(!fragmentToShow.isVisible()) {
-            vibrate(mSwitchPageEffect);
             for (AbstractPage page : mPages)
                 transaction.hide(page);
-            if(animation)
+            if(effects) {
+                vibrate(mSwitchPageEffect);
                 transaction.setCustomAnimations(R.anim.to_left, R.anim.to_right);
+            }
             transaction
                     .show(fragmentToShow)
                     .commit();
